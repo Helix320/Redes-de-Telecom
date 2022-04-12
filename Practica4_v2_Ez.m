@@ -22,8 +22,7 @@ v = 1/sqrt(miu*eps);
 pnm = [
     2.4 3.8 5.1 6.18;
     5.52 7.01 8.4 9.2;
-    8.65 10.17 11.6 13.01;
-    11.7 13.3 14.79 16.2
+    8.65 10.17 11.6 13.01
     ];
 
 n = 0;
@@ -46,6 +45,7 @@ for n = 1: 4
 
 
         for t_TMnm = 1:1:5
+            z_TMnm = lambdac_TMnm*t_TMnm; %Multiplos del doble de la longitud de onda, z = 0-5m,0-10m,0-100m (dependiendo)
         for ind = 1:length(X_TMnm)
             for jnd = 1:length(phi)
                 Ez_TMnm(ind,jnd) = besselj((n-1),X_TMnm(ind))*(cos((n-1)*phi(jnd)) + sin((n-1)*phi(jnd))) * exp(i*BetaLambda_TMnm*z_TMnm) * exp(i*omegac*t_TMnm); 

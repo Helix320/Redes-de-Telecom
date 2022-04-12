@@ -22,8 +22,7 @@ v = 1/sqrt(miu*eps);
 pnm = [
     2.4 3.8 5.1 6.18;
     5.52 7.01 8.4 9.2;
-    8.65 10.17 11.6 13.01;
-    11.7 13.3 14.79 16.2
+    8.65 10.17 11.6 13.01
     ];
 
 n = 0;
@@ -43,11 +42,11 @@ for n = 1: 4
         h_TMnm = kc;
         X_TMnm = h_TMnm.*r;
         z_TMnm = lambdac_TMnm*2; %Multiplos del doble de la longitud de onda, z = 0-5m,0-10m,0-100m (dependiendo)
-
-        t_TMnm = 1;
-
         coeficiente = (-i*(f0/fc_TMnm))/((1-(fc_TMnm/f0)^2)^(1/2));
+        for t_TMnm = 1:1:5
 
+        z_TMnm = lambdac_TMnm*t_TMnm; %Multiplos del doble de la longitud de onda, z = 0-5m,0-10m,0-100m (dependiendo)
+      
         for ind = 1:length(X_TMnm)
             for jnd = 1:length(phi)
                 Er_TMnm(ind,jnd) = coeficiente*( (((n-1)/X_TMnm(ind))*(besselj((n-1),X_TMnm(ind)))) - (besselj((n),X_TMnm(ind))))*(cos((n-1)*phi(jnd)) + sin((n-1)*phi(jnd))) * exp(i*BetaLambda_TMnm*z_TMnm); 
@@ -56,14 +55,17 @@ for n = 1: 4
 
 
         [x3,y3,z3] = pol2cart(PHI1,R1,real(Er_TMnm));
-
-        figure();
+        
         mesh(x3,y3,z3);
-        view(90,90);
+        view(45,45);
         xlabel('r[m]');
         ylabel('\phi [°]');
         zlabel("E_r{TM"+(n-1)+m+"}");
         title("E_r{TM"+(n-1)+m+"}, z ="+z_TMnm+"m, t = "+t_TMnm+"s");
+        drawnow limitrate
+        pause(1);
+        end
+        figure();
    end
 end
 
